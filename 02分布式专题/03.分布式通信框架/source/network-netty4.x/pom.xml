@@ -13,13 +13,41 @@
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<app.mainClass>clonegod.netty01.NettyServer</app.mainClass>
 	</properties>
 
 	<dependencies>
 		<dependency>
+			<groupId>clonegod</groupId>
+			<artifactId>clonegod-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	
+		<dependency>
 		    <groupId>io.netty</groupId>
 		    <artifactId>netty-all</artifactId>
 		    <version>4.1.16.Final</version>
+		</dependency>
+		
+		<!-- 序列化 -->
+		<dependency>
+		    <groupId>org.jboss.marshalling</groupId>
+		    <artifactId>jboss-marshalling</artifactId>
+		    <version>1.4.11.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.marshalling</groupId>
+		    <artifactId>jboss-marshalling-serial</artifactId>
+		    <version>1.4.11.Final</version>
+		</dependency>
+		
+		<!-- 操作系统信息收集器 -->
+		<dependency>
+		    <groupId>org.hyperic</groupId>
+		    <artifactId>sigar</artifactId>
+		    <version>1.6.4</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/tools/sigar.jar</systemPath>
 		</dependency>
 	
 		<dependency>
@@ -40,6 +68,68 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
+			
+			<!-- 
+	        <plugin>
+	                <artifactId>maven-assembly-plugin</artifactId>
+	                <configuration>
+	                    <archive>
+	                        <manifest>
+	                            <mainClass>${app.mainClass}</mainClass>
+	                        </manifest>
+	                    </archive>
+	                    <descriptorRefs>
+	                        <descriptorRef>jar-with-dependencies</descriptorRef>
+	                    </descriptorRefs>
+	                </configuration>
+	            </plugin>
+	         -->  
+			
+			<plugin>
+	         	<groupId>org.apache.maven.plugins</groupId>  
+	            <artifactId>maven-jar-plugin</artifactId>
+	            <configuration>  
+	            	<classesDirectory>target/classes/</classesDirectory>
+	                <archive>  
+	                    <manifest>  
+	                        <!--  指定主函数所在的类  -->
+	                        <mainClass>${app.mainClass}</mainClass>
+	                        <!-- 告知 maven-jar-plugin添加一个 Class-Path元素到 MANIFEST.MF文件，以及在Class-Path元素中包括所有依赖项 -->  
+	                        <addClasspath>true</addClasspath>  
+	                        <!-- 指定依赖包的类路径（相对于的当前jar包所在的路径）  -->
+	                        <classpathPrefix>lib/</classpathPrefix>
+	                    </manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+	                </archive>
+	            </configuration>  
+	        </plugin>
+	        <plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-dependency-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <id>copy-dependencies</id>
+	                    <phase>prepare-package</phase>
+	                    <goals>
+	                        <goal>copy-dependencies</goal>
+	                    </goals>
+	                    <configuration>
+	                    	<includeTypes>jar</includeTypes>
+	                        <!-- 将所有的依赖包复制到target/lib目录下，与maven-jar-plugin中指定的classpathPrefix保持一致 -->
+	                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
+	                        <!-- 是否排除间接依赖的包  -->
+	                        <excludeTransitive>false</excludeTransitive>
+	                        <!-- 是否去掉复制的jar文件的版本信息（不能去掉） --> 
+	                        <stripVersion>false</stripVersion>
+	                        <!-- 可以排除测试相关的jar包 -->
+	                        <excludeArtifactIds>junit,hamcrest-core</excludeArtifactIds>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+			
 		</plugins>
 	</build>
 </project>
