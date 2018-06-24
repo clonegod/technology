@@ -33,5 +33,10 @@ book
 *.doc
 *.docx
 *.pdf
+*.ppt
 *.pptx
+test-data
+
+
+
 
