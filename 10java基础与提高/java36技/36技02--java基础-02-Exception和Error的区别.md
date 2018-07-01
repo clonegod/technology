@@ -1,4 +1,4 @@
-# Lession2 | Exception和Error有什么区别？
+# Lesson2 | Exception和Error有什么区别？
 	考察Java对异常的处理机制
 	1、异常的分类：Throwable、Error、Exception、RuntimeException
 	2、处理异常的正确姿势

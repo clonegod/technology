@@ -1,4 +1,4 @@
-# Lession3 | 谈谈final、finally、 finalize有什么不同？
+# Lesson3 | 谈谈final、finally、 finalize有什么不同？
 
 
 ## final

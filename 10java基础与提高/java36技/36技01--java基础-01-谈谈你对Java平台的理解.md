@@ -1,4 +1,4 @@
-# 01 - Java基础
+# Lesson1 - Java基础
 	围绕Java语言基本特性和机制，构建牢固的Java技术功底。
 
 ---
