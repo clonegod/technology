@@ -110,11 +110,13 @@ Executors 则从简化使用的角度，为我们提供了各种方便的静态�
                       	RejectedExecutionHandler handler)
 
 ## SingleThreadPool 的特殊之处
-	DelegationXXX 中重写了finalize()	，在finalize()中调用了关闭线程池的操作！
+	SingleThreadPool使用FinalizableDelegatedExecutorService进行了包装。
+	FinalizableDelegatedExecutorService 中重写了finalize()，在finalize()中调用了关闭线程池的操作！
 	因此，即使在方法内部通过newSingleThreadPool创建线程池，在方法结束时，这个线程池将被合理的关闭。
 
 	而其它类型的线程池，都必须手动调用shutdown/shutdownNow才能关闭。
 
+---
 
 ## 线程池的实践经验
 	1、任务队列有界，防止大量任务堆积；
@@ -123,6 +125,9 @@ Executors 则从简化使用的角度，为我们提供了各种方便的静态�
 	4、避免ThreadLocal与ThreadPool一起使用；
 	5、计算密集型的线程池中，线程个数建议为CPU个数-1；
 	6、IO密集型的线程池中，线程个数可以适当增大，以提高并发处理能力；
+	7、提交到线程池中的任务要捕获异常
+		如果Runnable/Callable直接抛出异常，每次都会创建线程，也就等于线程池没有发挥作用，
+		如果大并发下一直创建线程可能会导致JVM挂掉。
 
 ## 线程池使用注意点
 	1、避免任务堆积。
