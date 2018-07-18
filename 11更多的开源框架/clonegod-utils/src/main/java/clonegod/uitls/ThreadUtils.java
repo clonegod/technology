@@ -9,7 +9,7 @@ public final class ThreadUtils {
 	private ThreadUtils() {}
 	
 	public static String currentThreadName() {
-		return Thread.currentThread().getName();
+		return "[" + Thread.currentThread().getName() + "] ";
 	}
 	
 	public static void sleep(int millis) {

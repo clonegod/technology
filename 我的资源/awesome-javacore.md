@@ -43,6 +43,7 @@
 	
 	# 其它不错的网站
 	https://plumbr.io/blog/category/garbage-collection
+    https://plumbr.io/java-garbage-collection-handbook
 	https://blogs.vmware.com/apps/2011/06/taking-a-closer-look-at-sizing-the-java-process.html
 	
 	Java面试知识点解析——JVM篇 Java团长
@@ -77,6 +78,10 @@
 	
 	# 非常好 Definitive guide to CompletableFuture
 	https://www.nurkiewicz.com/2013/05/java-8-definitive-guide-to.html
+    
+    
+    # java8最重要的5个调整
+    https://www.nagarro.com/en/blog/post/20/Top-5-items-that-make-adoption-of-Java-8-exciting-for-Enterprises
 
 --------------------------------------------------------------------------------
 
