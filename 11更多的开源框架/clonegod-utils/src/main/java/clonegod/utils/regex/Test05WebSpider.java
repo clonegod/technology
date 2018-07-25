@@ -1,4 +1,4 @@
-package regexp;
+package clonegod.utils.regex;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
