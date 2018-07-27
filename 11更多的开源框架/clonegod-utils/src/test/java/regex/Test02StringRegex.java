@@ -1,4 +1,4 @@
-package clonegod.utils.regex;
+package regex;
 
 import java.util.Arrays;
 import java.util.TreeSet;

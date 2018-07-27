@@ -1,4 +1,4 @@
-package clonegod.utils.jsonpath;
+package jsonpath;
 
 import java.io.IOException;
 import java.util.Arrays;

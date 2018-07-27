@@ -1,4 +1,4 @@
-package clonegod.utils.regex;
+package regex;
 
 import java.util.ArrayList;
 import java.util.Arrays;

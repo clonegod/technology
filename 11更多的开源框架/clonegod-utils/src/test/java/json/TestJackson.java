@@ -1,4 +1,4 @@
-package clonegod.utils.json;
+package json;
 
 public class TestJackson {
 
