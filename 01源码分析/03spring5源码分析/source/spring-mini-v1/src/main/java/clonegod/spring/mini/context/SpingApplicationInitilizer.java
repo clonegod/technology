@@ -1,4 +1,4 @@
-package clonegod.spring.mini.servlet;
+package clonegod.spring.mini.context;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,8 +20,7 @@ import clonegod.spring.mini.controller.SimpleController;
  * 模拟spring IOC容器的初始化过程
  *
  */
-public class IOCContainer {
-	
+public class SpingApplicationInitilizer {
 	private Properties props = new Properties();
 	private Set<String> clsNames = new HashSet<>();
 	private ConcurrentHashMap<String, Object> beanMap = new ConcurrentHashMap<>();
@@ -45,7 +44,7 @@ public class IOCContainer {
 
 	private void doLoadConfig(String contextConfigLocation) {
 		System.out.println("1、加载配置文件");
-		try (InputStream inStream = IOCContainer.class.getResourceAsStream("/application.properties");) {
+		try (InputStream inStream = SpingApplicationInitilizer.class.getResourceAsStream("/application.properties");) {
 			props.load(inStream);
 		} catch (IOException e) {
 			e.printStackTrace();

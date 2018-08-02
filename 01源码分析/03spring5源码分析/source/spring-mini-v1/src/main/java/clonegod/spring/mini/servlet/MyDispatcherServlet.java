@@ -11,18 +11,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ClonegodDispatcherServlet extends HttpServlet {
+import clonegod.spring.mini.context.SpingApplicationInitilizer;
+
+public class MyDispatcherServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5172564106420370290L;
+	
+	public static final String CONFIG_LOCATION_PARAM = "contextConfigLocation";
 	
 	/**
 	 * Servlet 容器启动时，回调的方法，用来执行用户之定义逻辑：模拟spring容器的初始化。
 	 */
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		String contextConfigLocation = config.getInitParameter("servlet-mvc");
+		String contextConfigLocation = config.getInitParameter(CONFIG_LOCATION_PARAM);
 		System.out.println("加载配置成功，contextConfigLocation: " + contextConfigLocation);
-		new IOCContainer().init(contextConfigLocation);
+		new SpingApplicationInitilizer().init(contextConfigLocation);
 	}
 	
 	// ---> http://localhost:8080/clonegod-spring-mini
