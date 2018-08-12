@@ -19,3 +19,12 @@
 	【模板方法模式】
 		JDBCTemplate
 
+		DispatcherServlet中的doService()
+			DispatcherServlet extends FrameworkServlet extends HttpServlet
+			HttpServlet中的doGet,doPost等方法被FrameworkServlet重写
+			重写为调用processRequest(),而processRequest()内部则调用抽象的doService()
+			doService()在DispatcherServlet中进行了具体实现
+			DispatcherServlet内部通过doDispatch()对HTTP请求进行转发处理
+
+
+
