@@ -27,6 +27,8 @@ import org.w3c.dom.NodeList;
  * 		
  * 		and , or, not 多个表达式结合的逻辑与或非
  * 		
+ * 		parent::*	选择直接父节点
+ * 		following-sibling::*  选择节点后面的兄弟节点
  */
 
 //*[@id="logout"]//p[contains(.,'确定退出')] | //*[@id="qzdl_div"]/div/div/div/div[2]/p/span[string-length()>1]/parent::*
