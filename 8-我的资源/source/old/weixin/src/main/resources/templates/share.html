@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+<meta charset="UTF-8"/>
+<title>微信页面分享</title>
+</head>
+<body>
+	
+	快来领取红包！
+	
+	<div th:if="${isShared}">该页面是被分享出来的->此处显示平台二维码</div>
+	<div th:if="! ${isShared}">该页面正常显示，不显示二维码</div>
+	
+</body>
+</html>

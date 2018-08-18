@@ -1,0 +1,231 @@
+{
+  "index": {
+    "taskName": "index",
+    "taskOrder": 1,
+    "pageRequest": {
+      "url": "http://www.bjgjj.gov.cn/wsyw/wscx/gjjcx-login.jsp",
+      "httpMethod": "GET",
+      "charset": "GBK",
+      "contentType": "HTML",
+      "headers": {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Cache-Control": "no-cache",
+        "Referer": "http://www.bjgjj.gov.cn/wsyw/wscx/gjjcx-choice.jsp",
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
+        "Host": "www.bjgjj.gov.cn",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "zh-CN,zh;q=0.8"
+      },
+      "rawBody": false,
+      "parameters": {
+        "t": "1502210561646"
+      },
+      "cachedArgs": {
+        "password": "change it",
+        "loginId": "123434534543",
+        "fMcM3": "pdcss123",
+        "fEAI5": "co1qacq11",
+        "TjXjbs4": "css11q1a"
+      }
+    },
+    "urlFilter": {
+      "igonreUrls": [
+        "xxx.js",
+        "asdwqnasmdnams.jsp"
+      ]
+    },
+    "webClientOption": {
+      "downloadImages": false,
+      "isRedirectEnabled": true,
+      "javaScriptEnabled": true,
+      "webConnectionTimeout": 60000
+    },
+    "pageExtract": {
+      "successFields": [
+        {
+          "name": "lb",
+          "parserType": "HTML",
+          "expression": "//input[@id='lb']",
+          "extFuncs": []
+        }
+      ],
+      "failedFields": [],
+      "extFields": [
+        {
+          "name": "imageCode",
+          "parserType": "HTML",
+          "expression": "//*[@id='sds']/img",
+          "extFuncs": []
+        },
+        {
+          "name": "lk",
+          "parserType": "TEXT",
+          "expression": "<input .* value=\"(.*?)\" id=\"lk\">",
+          "extFuncs": []
+        },
+        {
+          "name": "lb",
+          "parserType": "HTML",
+          "expression": "//input[@id='lb']",
+          "extFuncs": []
+        },
+        {
+          "name": "bh",
+          "parserType": "HTML",
+          "expression": "spel:'javascript:strEncode('''+['loginId']+''','''+['fMcM3']+''','''+['TjXjbs4']+''','''+['fEAI5']+''');'",
+          "extFuncs": []
+        },
+        {
+          "name": "mm",
+          "parserType": "HTML",
+          "expression": "spel:'javascript:strEncode('''+['password']+''','''+['fMcM3']+''','''+['TjXjbs4']+''','''+['fEAI5']+''');'",
+          "extFuncs": []
+        }
+      ],
+      "dataFields": []
+    },
+    "pauseNext": true,
+    "success": false,
+    "reTryCount": 0
+  },
+  "lk": {
+    "taskName": "lk",
+    "taskOrder": 2,
+    "pageRequest": {
+      "url": "http://www.bjgjj.gov.cn/wsyw/wscx/asdwqnasmdnams.jsp?t=1",
+      "httpMethod": "POST",
+      "charset": "GBK",
+      "contentType": "TEXT",
+      "headers": {
+        "Origin": " http://www.bjgjj.gov.cn",
+        "Accept": " */*",
+        "User-Agent": " Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
+        "Connection": " keep-alive",
+        "Referer": " http://www.bjgjj.gov.cn/wsyw/wscx/gjjcx-login.jsp",
+        "Host": " www.bjgjj.gov.cn",
+        "Accept-Encoding": " gzip, deflate",
+        "Accept-Language": " zh-CN,zh;q=0.8",
+        "Content-Type": " text/html;"
+      },
+      "rawBody": true,
+      "body": "",
+      "parameters": {},
+      "cachedArgs": {}
+    },
+    "urlFilter": {
+      "igonreUrls": []
+    },
+    "webClientOption": {
+      "downloadImages": false,
+      "isRedirectEnabled": true,
+      "javaScriptEnabled": false,
+      "webConnectionTimeout": 60000
+    },
+    "pageExtract": {
+      "successFields": [
+        {
+          "name": "lk",
+          "parserType": "TEXT",
+          "expression": "\\w{4}(\\d+)",
+          "extFuncs": []
+        }
+      ],
+      "failedFields": [],
+      "extFields": [
+        {
+          "name": "lk",
+          "parserType": "TEXT",
+          "expression": "\\w{4}(\\d+)",
+          "extFuncs": []
+        }
+      ],
+      "dataFields": []
+    },
+    "pauseNext": false,
+    "success": false,
+    "reTryCount": 0
+  },
+  "login": {
+    "taskName": "login",
+    "taskOrder": 3,
+    "pageRequest": {
+      "url": "http://www.bjgjj.gov.cn/wsyw/wscx/gjjcx-choice.jsp",
+      "httpMethod": "POST",
+      "charset": "GBK",
+      "contentType": "HTML",
+      "headers": {
+        "Origin": " http://www.bjgjj.gov.cn",
+        "Accept": " text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Cache-Control": " max-age=0",
+        "User-Agent": " Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
+        "Referer": " http://www.bjgjj.gov.cn/wsyw/wscx/gjjcx-login.jsp",
+        "Host": " www.bjgjj.gov.cn",
+        "Accept-Encoding": " gzip, deflate",
+        "Accept-Language": " zh-CN,zh;q=0.8",
+        "Content-Type": " application/x-www-form-urlencoded"
+      },
+      "rawBody": false,
+      "parameters": {
+        "mm": "spel:['mm']",
+        "lb": "spel:['lb']",
+        "bh": "spel:['bh']",
+        "gjjcxjjmyhpppp": "spel:['imageCode']",
+        "lk": "spel:['lk']"
+      },
+      "cachedArgs": {}
+    },
+    "urlFilter": {
+      "igonreUrls": []
+    },
+    "webClientOption": {
+      "downloadImages": false,
+      "isRedirectEnabled": true,
+      "javaScriptEnabled": false,
+      "webConnectionTimeout": 60000
+    },
+    "pageExtract": {
+      "successFields": [
+        {
+          "name": "success.msg",
+          "parserType": "HTML",
+          "expression": "//table[@id='new-mytable']",
+          "extFuncs": []
+        }
+      ],
+      "failedFields": [
+        {
+          "name": "error.msg1",
+          "parserType": "TEXT",
+          "expression": "<script>alert(.*?);",
+          "extFuncs": []
+        },
+        {
+          "name": "error.msg2",
+          "parserType": "TEXT",
+          "expression": "<script>window.location=(.*?);</script>",
+          "extFuncs": [
+            {
+              "expr": "spel:#this.contains('gjjcx-logineoor.jsp?id=3')?'没有此条记录':#this"
+            }
+          ]
+        }
+      ],
+      "extFields": [
+        {
+          "name": "list.account",
+          "parserType": "HTML",
+          "expression": "//table[@id='new-mytable']//td//a[contains(@onclick,'gjj_cx.jsp')]/@onclick",
+          "extFuncs": [
+            {
+              "expr": "regex:(gjj_cx\\.jsp.*?lx=0)"
+            }
+          ]
+        }
+      ],
+      "dataFields": []
+    },
+    "pauseNext": false,
+    "success": false,
+    "reTryCount": 0
+  }
+}

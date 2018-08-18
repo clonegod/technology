@@ -1,0 +1,8 @@
+<configuration>
+
+	<property name="LOG_DIR" value="/var/logs/spider" />
+	
+	<!-- 从classpath路径下引入配置 -->
+	<include resource="config/logback-include.xml"/>
+	
+</configuration>

@@ -1,0 +1,36 @@
+#!/bin/sh
+
+file=/root/playground/report.info
+
+/bin/date +"%F %T" >> $file
+
+echo >> $file
+
+echo "disk info:" >> $file
+/bin/df -h >> $file
+
+echo >> $file
+
+echo "online users:" >> $file
+/usr/bin/who | /bin/grep -v root >> $file
+
+echo >> $file
+
+echo "memory info:" >> $file
+/usr/bin/free -m >> $file
+
+echo >> $file
+
+#write root 发送报告给root用户
+/usr/bin/write root < $file && /bin/rm $file
+
+------------------------
+将脚本交给crontab定时执行
+
+# use crontab to schedule 
+*   *   *   *   *
+分  时  日  月  周
+
+# 每周一到周五的9点执行report.sh脚本
+#crontab -e
+#0 9 * * 1-5 /bin/sh /root/playground/report.sh

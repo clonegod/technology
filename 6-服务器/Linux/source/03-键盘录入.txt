@@ -1,0 +1,12 @@
+#!/bin/sh
+read -p 'please input your name and age: ' name age
+
+echo "the name is $name"
+
+echo "the age is $age"
+
+# 读取键盘录入，并赋值给变量
+[root@node1 playground]# ./read.sh 
+please input your name and age: alice 20
+the name is alice
+the age is 20
