@@ -8,6 +8,10 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveAction;
 import java.util.logging.Logger;
 
+/**
+ * 没有返回值的Recursive 递归任务拆解
+ * 
+ */
 public class CustomRecursiveAction extends RecursiveAction {
  
     private String workload = "";

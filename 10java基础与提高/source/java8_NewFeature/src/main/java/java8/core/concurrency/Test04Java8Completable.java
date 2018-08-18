@@ -16,6 +16,7 @@ import clonegod.utils.log.Console;
  *  	链式操作多个Future，对上一个异步结果再次进行计算（过滤，筛选，合并结果等）	
  *  		completableFuture.thenRun(action)
  *  		completableFuture.thenApply(fn)
+ *  		completableFuture.thenComposeAsync(other, fn)
  *  		completableFuture.thenCombineAsync(other, fn)
  *  		...
  *  

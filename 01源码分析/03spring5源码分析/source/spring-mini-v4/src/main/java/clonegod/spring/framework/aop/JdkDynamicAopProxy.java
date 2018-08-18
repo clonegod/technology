@@ -28,6 +28,10 @@ public final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Se
 									this);
 	}
 
+	/**
+	 * spring 注入的是 代理对象，代理对象的方法被调用时会回调invoke()，
+	 * 在这里就可以对拦截到的方法进行各种操作：事务控制，日志记录，安全控制。。。
+	 */
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		// 判断当前被调用的方法，是否配置了切面
@@ -38,7 +42,7 @@ public final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Se
 			aspect.getMethods()[0].invoke(aspect.getAspect());
 		}
 		
-		Object result = method.invoke(this.targetInstance, args);
+		Object result = method.invoke(this.targetInstance, args); // 调用被代理对象的方法
 		
 		// 后置
 		if(aopConfig != null && this.aopConfig.containsAspect(method)) {

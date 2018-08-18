@@ -280,6 +280,8 @@ public class DefaultListableBeanFactory extends DefaultSingletonBeanRegistry imp
 					if(getSingletonProxy(autowiredBeanName) != null) {
 						autowiredInstance = ((BeanWrapper)getSingletonProxy(autowiredBeanName)).getWrappedInstance();
 					}
+					
+					// Spring中依赖注入的都是代理对象
 					Object proxyedInstance = null;
 					if(Proxy.isProxyClass(autowiredInstance.getClass())) {
 						proxyedInstance = autowiredInstance;

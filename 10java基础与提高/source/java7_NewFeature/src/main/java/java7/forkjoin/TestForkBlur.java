@@ -5,6 +5,10 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 任务拆解 - 将图像数据分块进行模糊化操作
+ *
+ */
 public class TestForkBlur {
 	
     // Plumbing follows.

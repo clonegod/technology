@@ -9,7 +9,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
 /**
- * 子任务将合并为一个结果
+ * 有返回值的递归任务拆解，最后将各个子任务结果进行合并
  *
  */
 public class CustomRecursiveTask extends RecursiveTask<Integer> {
