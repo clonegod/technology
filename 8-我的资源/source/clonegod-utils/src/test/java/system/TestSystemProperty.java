@@ -1,6 +1,8 @@
 package system;
 public class TestSystemProperty {
-	
+	/**
+	 * 系统属性 - 与java运行时相关的系统配置参数 
+	 */
 	public static void main(String[] args) {
 	
 		System.out.println("java版本号：" + System.getProperty("java.version")); // java版本号

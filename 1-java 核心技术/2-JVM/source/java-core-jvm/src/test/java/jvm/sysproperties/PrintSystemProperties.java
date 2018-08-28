@@ -23,10 +23,14 @@ import java.util.Map.Entry;
  */
 public class PrintSystemProperties {
 	public static void main(String[] args) {
-		
+		// System.getProperties()  -- java运行时的系统配置参数
 		for(Entry<Object, Object> prop : System.getProperties().entrySet()) {
 			System.out.println(prop.getKey() + "\t" + prop.getValue());
 		}
+		
+		
+		// System.getenv() -- 操作系统的环境配置，返回的是不可变的Map
+		System.out.println(System.getenv());
 	}
 }
 

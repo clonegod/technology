@@ -29,6 +29,7 @@ import org.w3c.dom.NodeList;
  * 		
  * 		parent::*	选择直接父节点
  * 		following-sibling::*  选择节点后面的兄弟节点
+ * 		following-sibling::*[0]  选择节点后面的第一个兄弟节点
  */
 
 //*[@id="logout"]//p[contains(.,'确定退出')] | //*[@id="qzdl_div"]/div/div/div/div[2]/p/span[string-length()>1]/parent::*
