@@ -5,18 +5,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.util.Map;
 
 import clonegod.rpc.api.RPCRequest;
 
 public class RequestHandler implements Runnable {
 
-	private Object service; // PRC 发布的服务对象实例
+	private Map<String, Object> serviceMapping;
 	private Socket socket;
 	
-	public RequestHandler(Object service, Socket socket) {
-		super();
-		this.service = service;
+	public RequestHandler(Socket socket, Map<String, Object> serviceMapping) {
 		this.socket = socket;
+		this.serviceMapping = serviceMapping;
 	}
 
 	@Override
@@ -54,10 +54,18 @@ public class RequestHandler implements Runnable {
 	 * 
 	 */
 	private Object invoke(RPCRequest request) throws Exception {
-		String className = request.getClassName();
+		String serviceName = request.getClassName();
 		
-		if(! Class.forName(className).isAssignableFrom(service.getClass())) {
-			throw new RuntimeException("服务名称错误：" + className);
+		String version = request.getVersion();
+		if(version !=null && ! "".equals(version)) {
+			serviceName = serviceName + "-" + version;
+		}
+		
+		// 根据请求的服务名称获取对应的服务实例对象
+		Object service = serviceMapping.get(serviceName);
+		
+		if(service == null) {
+			throw new RuntimeException("服务名称错误：" + serviceName);
 		}
 		
 		String methodName = request.getMethod();
@@ -67,6 +75,7 @@ public class RequestHandler implements Runnable {
 			parameterTypes[i] = args[i].getClass();
 		}
 		
+		// 通过反射调用本地服务的方法
 		Method method = service.getClass().getDeclaredMethod(methodName, parameterTypes);
 		Object result = method.invoke(service, args);
 		return result;

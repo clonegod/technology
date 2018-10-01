@@ -13,6 +13,7 @@ public class RPCRequest implements Serializable {
 	private String className; // 服务接口的名称
 	private String method; // 要调用的方法
 	private Object[] params; // 方法的参数列表
+	private String version;
 	
 	public String getClassName() {
 		return className;
@@ -33,11 +34,16 @@ public class RPCRequest implements Serializable {
 		this.params = params;
 	}
 	
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 	@Override
 	public String toString() {
 		return "RPCRequest [className=" + className + ", method=" + method + ", params=" + Arrays.toString(params)
-				+ "]";
+				+ ", version=" + version + "]";
 	}
-	
 	
 }
