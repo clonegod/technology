@@ -1,4 +1,4 @@
-package zk.usage.select;
+package zk.usage.selectmaster;
 
 import java.io.Serializable;
 

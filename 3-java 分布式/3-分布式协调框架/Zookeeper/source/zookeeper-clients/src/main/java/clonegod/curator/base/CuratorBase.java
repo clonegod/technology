@@ -31,7 +31,7 @@ public class CuratorBase {
 					.connectString(CONNECT_ADDR)
 					.sessionTimeoutMs(SESSION_OUTTIME)
 					.retryPolicy(retryPolicy)
-//					.namespace("super")
+//					.namespace("super") // 设置全局根节点，之后的所有操作都是在该节点下进行的。（统一路径前缀）
 					.build();
 		//3 开启连接
 		cf.start();
@@ -50,7 +50,7 @@ public class CuratorBase {
 		cf.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath("/super/c1","c1内容".getBytes());
 		cf.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath("/super/c2","c2内容".getBytes());
 		//读取节点
-		Stat stat = new Stat();
+		Stat stat = new Stat(); // 将操作结果保存到stat对象中
 		String ret1 = new String(cf.getData().storingStatIn(stat).forPath("/super/c2")); // 读取节点中存储的数据并将节点状态存储到给定的stat对象中
 		System.out.println(ret1);
 		System.out.println("stat=" + stat);

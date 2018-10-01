@@ -1,10 +1,13 @@
 # zookeeper是什么？
+	1、高可用（至少3个节点组成的集群）；
+	2、高性能（基于内存），只要过半节点写入成功，就会响应客户端（即：非强一致性）；
+		集群内部节点的数据同步以类似 2pc 两阶段提交的方式，通过最终一致性确保集群中的数据一致。
 
 Zookeeper是一个具有高可用、高性能和具有分布式数据一致性的分布式数据管理及协调框架，是基于对ZAB算法的实现，基于这样的特性，使ZK成为解决分布式一致性问题的利器，同时Zookeeper提供了丰富的节点类型和Watcher监听机制，通过这两个特点，可以非常方便的构建一系列分布式系统中都会涉及的核心功能： 如：数据发布/订阅，负载均衡，命名服务，分布式协调/通知，集群管理，Master选举，分布式锁，分布式队列等。
 
 #### 高可用 - 集群模式，超过一半的节点存活就可以对外提供服务
 
-#### 高性能 - 数据都加载到内存中
+#### 高性能 - 数据都加载到内存中，非强一致性
 
 #### 分布式一致性 - ZAB协议 （原子消息广播 + 崩溃恢复机制）
 
@@ -69,6 +72,10 @@ ZNode可以保存数据，同时还可以挂载子节点，因此构成了一个
 
 
 ##节点特性
+	持久化、临时节点、有序节点
+	同级节点具有唯一性
+	临时节点不能存在子节点	
+
 ZooKeeper 节点是有生命周期的，这取决于节点的类型。在 ZooKeeper 中，节点类型可以分为持久节点（PERSISTENT ）、临时节点（EPHEMERAL），以及顺序节点（SEQUENTIAL ），具体在节点创建过程中，一般是组合使用，可以生成以下 4 种节点类型。
 
 ##### 持久节点（PERSISTENT）
@@ -154,91 +161,6 @@ Zookeeper有数据监视和子数据监视   getdata() and exists() 设置数据
 
 NodeDataChanged事件：此处的变更包括数据节点内容和数据的版本号DateVersion。因此，对于Zookeeper来说，无论数据内容是否更改，还是会触发这个事件的通知，一旦客户端调用了数据更新接口，且更新成功，就会更新dataversion值。
 
-
-###ACL--保障数据的安全
-ACL全称为Access Control List（访问控制列表），用于控制资源的访问权限。zk利用ACL策略控制节点的访问权限，如节点数据读写、节点创建、节点删除、读取子节点列表、设置节点权限等。
-
-znode的ACL是没有继承关系的，每个znode的权限都是独立控制的，只有客户端满足znode设置的权限要求时，才能完成相应的操作。
-
-Zookeeper的ACL，分为三个维度：**scheme、id、permission**
-
-通常表示为：scheme:id:permission，schema代表授权策略，id代表用户，permission代表权限。
-
-id是验证模式，不同的scheme，id的值也不一样。
-
-
-### scheme
-scheme即采取的授权策略，每种授权策略对应不同的权限校验方式。
-
-下面是zk常用的几种scheme：
-#####1. digest
-语法：digest:username:BASE64(SHA1(password)):cdrwa 
-	digest：是授权方式 
-	username:BASE64(SHA1(password))：是id部分 
-	cdrwa：权限部份 
-
-用户名+密码授权访问方式，也是常用的一种授权策略。
-
-id部份是用户名和密码做sha1加密再做BASE64加密后的组合。
-
-比如，
-
-	## 创建节点/node_05
-	shell> create /node_05 data
-	Created /node_05
-	## 设置权限
-	shell> setAcl /node_05 digest:yangxin:ACFm5rWnnKn9K9RN/Oc8qEYGYDs=:cdrwa
-	cZxid = 0x8e
-	ctime = Mon Nov 14 21:38:52 CST 2016
-	mZxid = 0x8e
-	mtime = Mon Nov 14 21:38:52 CST 2016
-	pZxid = 0x8e
-	cversion = 0
-	dataVersion = 0
-	aclVersion = 1
-	ephemeralOwner = 0x0
-	dataLength = 3
-	numChildren = 0
-	## 获取节点刚刚设置的权限
-	shell> getAcl /node_05
-	'digest,'yangxin:ACFm5rWnnKn9K9RN/Oc8qEYGYDs=
-	: cdrwa
-	 
-	## 没有授权，创建节点失败
-	shell> create /node_05/node_05_01 data
-	Authentication is not valid : /node_05/node_05_01
-	 
-	## 添加授权信息
-	shell> addauth digest yangxin:123456
-	 
-	## 添加授权信息后，就可以正常操作了
-	shell> create /node_05/node_05_01 data
-	Created /node_05/node_05_01
-
-
-#####2. IP
-
-基于客户端IP地址校验，限制只允许指定的客户端能操作znode。 
-比如，设置某个节点只允许IP为192.168.1.100的客户端能读写该写节点的数据：ip:192.168.1.100:rw
-
-#####3. world
-语法：world:anyone:cdrwa 
-
-创建节点默认的scheme，所有人都可以访问。
-
-上面主要介绍了平时常用的三种scheme，除此之外，还有host、super（管理员超级用户）、auth授权策略。
-
-#### permission
-在介绍scheme的时候，提到了acl的权限，
-如：digest:username:BASE64(SHA1(password)):cdrwa中的cdrwa即是permission。 
-
-	1> CREATE(c)：创建子节点的权限 
-	2> DELETE(d)：删除节点的权限 
-	3> READ(r)：读取节点数据的权限 
-	4> WRITE(w)：修改节点数据的权限 
-	5> ADMIN(a)：设置子节点权限的权限
-
-注意：cd权限用于控制子节点，rwa权限用于控制节点本身
 
 ---
 ## Zookeeper数据与存储

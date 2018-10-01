@@ -1,4 +1,4 @@
-package clonegod.zookeeper.serverlist;
+package clonegod.zookeeper.registry;
 
 import java.util.Random;
 
@@ -35,7 +35,7 @@ public class AppServer implements Runnable {
 		};
 		
 		try {
-			zk = new ZooKeeper(Common.ZK_SERVER, 3000, watcher);
+			zk = new ZooKeeper(ZkConfig.ZK_SERVER, 3000, watcher);
 			while(zk.getState() != ZooKeeper.States.CONNECTED) {
 				Thread.sleep(1000);
 			}
@@ -50,12 +50,12 @@ public class AppServer implements Runnable {
 	 */
 	public boolean registry() throws Exception {
 		try {
-			if(zk.exists(Common.ZNODE_ROOT, true) == null) {
-				zk.create(Common.ZNODE_ROOT, "serverlist".getBytes(), 
+			if(zk.exists(ZkConfig.ZNODE_ROOT, true) == null) {
+				zk.create(ZkConfig.ZNODE_ROOT, "serverlist".getBytes(), 
 						Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 			}
 			// 子节点的类型设置为临时有序节点-EPHEMERAL_SEQUENTIAL，子节点的名称后面会自动加上一串自增的数字
-			zk.create(Common.ZNODE_ROOT+"/server", 
+			zk.create(ZkConfig.ZNODE_ROOT+"/server", 
 					getServicePath().getBytes("UTF-8"), 
 					Ids.OPEN_ACL_UNSAFE, 
 					CreateMode.EPHEMERAL_SEQUENTIAL);

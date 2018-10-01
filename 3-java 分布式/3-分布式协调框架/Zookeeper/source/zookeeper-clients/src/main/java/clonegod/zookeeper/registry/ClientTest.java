@@ -1,4 +1,4 @@
-package clonegod.zookeeper.serverlist;
+package clonegod.zookeeper.registry;
 
 import org.junit.Test;
 

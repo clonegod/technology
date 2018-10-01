@@ -1,4 +1,4 @@
-package clonegod.zookeeper.locks;
+package clonegod.zookeeper.registry;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-public class DistributeLockTest {
+public class AppServerTest {
 	
 	int nThreads = 5;
 	ExecutorService executor = Executors.newFixedThreadPool(nThreads);
@@ -14,9 +14,9 @@ public class DistributeLockTest {
 	@Test
 	public void test() throws InterruptedException {
 		for(int i = 0; i < nThreads; i++) {
-			executor.submit(new DistributeLock());
+			executor.submit(new AppServer());
 		}
-		executor.awaitTermination(20, TimeUnit.SECONDS);
+		executor.awaitTermination(10, TimeUnit.SECONDS);
 		executor.shutdown();
 	}
 	

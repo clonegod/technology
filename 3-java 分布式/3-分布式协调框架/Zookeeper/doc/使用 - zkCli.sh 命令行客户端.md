@@ -8,7 +8,7 @@ ZNODE 节点树，包含两部分内容：
 	持久节点 	- 可用来存储配置数据，一般存储的数据量很小，比如开关变量
 	持久有序节点 	- 可用来做有序消息队列
 	临时节点 	- 可用来服务上下线的动态感知，特点是客户端session失效后，节点会自动被删除
-	临时有序节点 	- 可用来实现分布式锁
+	临时有序节点 - 可用来实现分布式锁
 
 
 ##stat信息的解释
@@ -18,9 +18,9 @@ ZNODE 节点树，包含两部分内容：
 	mtime = Sat Aug 05 20:48:50 CST 2017		节点最后一次被修改的时间
 	pZxid = 0x500000015						当前节点下的子节点最后一次被修改时的事务ID
 	cversion = 0								子节点的版本号
-	dataVersion = 1								表示的是当前节点数据的版本号
+	dataVersion = 1								当前节点数据的版本号（乐观锁机制，控制并发写操作的安全性）
 	aclVersion = 0								表示acl的版本号，修改节点权限
-	ephemeralOwner = 0x0   						存放临时节点的sessionid
+	ephemeralOwner = 0x0   						临时节点的sessionid
 	dataLength = 3    							数据值的长度
 	numChildren = 0  							子节点的个数
 
@@ -28,8 +28,8 @@ ZNODE 节点树，包含两部分内容：
 
 ##基本增删改查操作
 #####1. create [-s] [-e] path data acl
-	-s 表示节点是否有序
-	-e 表示是否为临时节点。默认情况下，是持久化节点。
+	-s 表示节点节点是有序的
+	-e 表示节点是临时节点。（默认情况下，创建的节点是持久化的）
 	注意：临时节点下面不能创建子节点。
 
 #####2. get path [watch]
@@ -56,6 +56,7 @@ ZNODE 节点树，包含两部分内容：
 进入zookeeper命令行客户端
 
 	/usr/local/zookeeper/bin/zkCli.sh
+	/usr/local/zookeeper/bin/zkCli.sh -server ip:port
 
 操作命令
 
@@ -139,3 +140,18 @@ ZNODE 节点树，包含两部分内容：
 
 	[zk: localhost:2181(CONNECTED) 37] quit
 	Quitting...
+
+
+创建有序节点
+	
+	[zk: localhost:2181(CONNECTED) 3] create /tmp xxx
+	Created /tmp
+	[zk: localhost:2181(CONNECTED) 4] create /tmp/seq xxx
+	Created /tmp/seq
+	# 在seq目录下创建有序节点
+	[zk: localhost:2181(CONNECTED) 5] create -s /tmp/seq/ 0
+	Created /tmp/seq/0000000000
+	[zk: localhost:2181(CONNECTED) 6] create -s /tmp/seq/ 0
+	Created /tmp/seq/0000000001
+	[zk: localhost:2181(CONNECTED) 7] create -s /tmp/seq/ 0
+	Created /tmp/seq/0000000002

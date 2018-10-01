@@ -22,7 +22,7 @@ import org.apache.zookeeper.ZooKeeper;
  * 使用zookeeper原生api实现一个简化版的分布式锁！
  *	- 注意：生产环境建议使用curator提供的分布锁。
  */
-public class DistributeLockImpl {
+public class DistributeLockImpl1 {
 	/** zookeeper地址 */
 	private static final String CONNECT_ADDR = "192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181";
 	/** session超时时间 */
@@ -35,7 +35,7 @@ public class DistributeLockImpl {
 	private CountDownLatch connectedSemaphore = new CountDownLatch(1);
 	private CountDownLatch lockCountDownLatch = new CountDownLatch(1);
 	
-	public DistributeLockImpl() {
+	public DistributeLockImpl1() {
 		try {
 			zk = new ZooKeeper(CONNECT_ADDR, SESSION_TIMEOUT, new Watcher() {
 				@Override
@@ -52,7 +52,7 @@ public class DistributeLockImpl {
 			connectedSemaphore.await();
 			
 			// 创建LOCKS根节点
-			synchronized (DistributeLockImpl.class) {
+			synchronized (DistributeLockImpl1.class) {
 				if(zk.exists(ROOT_LOCKS, false) != null) {
 					zk.delete(ROOT_LOCKS, -1);
 				}
@@ -141,9 +141,9 @@ public class DistributeLockImpl {
 			executor.execute(new Runnable() {
 				@Override
 				public void run() {
-					DistributeLockImpl lock = null;
+					DistributeLockImpl1 lock = null;
 					try {
-						lock = new DistributeLockImpl();
+						lock = new DistributeLockImpl1();
 						
 						latch.countDown();
 						latch.await(); // 等待所有线程一起执行

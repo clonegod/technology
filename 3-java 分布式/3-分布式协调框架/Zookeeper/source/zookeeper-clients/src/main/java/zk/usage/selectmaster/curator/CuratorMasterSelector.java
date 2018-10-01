@@ -1,4 +1,4 @@
-package zk.usage.select.curator;
+package zk.usage.selectmaster.curator;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

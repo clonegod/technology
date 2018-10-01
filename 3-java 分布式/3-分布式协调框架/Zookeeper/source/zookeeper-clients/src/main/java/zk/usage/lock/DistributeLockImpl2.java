@@ -1,8 +1,11 @@
-package clonegod.zookeeper.locks;
+package zk.usage.lock;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
@@ -19,7 +22,20 @@ import org.apache.zookeeper.data.Stat;
  * 	分布式环境下多线程对共享资源的有序访问，基于事件通知的机制（异步）。
  * -> client将按创建ephemeral节点的先后顺序获得对应的编号，编号靠前的先执行。
  */
-public class DistributeLock implements Watcher, Runnable {
+public class DistributeLockImpl2 implements Watcher, Runnable {
+	
+	public static void main(String[] args) throws Exception {
+		
+		int nThreads = 5;
+		ExecutorService executor = Executors.newFixedThreadPool(nThreads);
+		
+		for(int i = 0; i < nThreads; i++) {
+			executor.submit(new DistributeLockImpl2());
+		}
+		executor.awaitTermination(20, TimeUnit.SECONDS);
+		executor.shutdown();
+	}
+	
 	/** zookeeper服务器地址 */
 	public static final String ZK_SERVER = "192.168.1.201:2181,"
 											+ "192.168.1.202:2181,"
@@ -102,12 +118,13 @@ public class DistributeLock implements Watcher, Runnable {
 	}
 
 	/**
-	 * 再次确认被删除的节点是否为第一个节点：
-	 * 假设某个client在获得锁之前挂掉了（非第1个节点）, 
-	 * 由于client创建的节点是ephemeral类型的, 
-	 * 因此这个节点也会被删除, 
-	 * 从而导致排在这个client之后的client提前获得了锁. 
-	 * 此时会存在多个client同时访问共享资源.
+	 * 注意：
+	 * 必须再次确认被删除的节点是否为第一个节点：
+	 * 	假设某个client在获得锁之前挂掉了（非第1个节点）, 
+	 * 	由于client创建的节点是ephemeral类型的, 
+	 * 	因此这个节点也会被删除, 
+	 * 	从而导致排在这个client之后的client提前获得了锁. 
+	 * 	此时会造成某个client错误地认为自己获得锁，导致多个线程同时获取到锁的问题。
 	 */
 	private void checkLockSuccess() {
 		try {

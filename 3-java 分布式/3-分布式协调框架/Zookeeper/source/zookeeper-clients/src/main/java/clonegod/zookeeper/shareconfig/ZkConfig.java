@@ -1,6 +1,6 @@
 package clonegod.zookeeper.shareconfig;
 
-public class Common {
+public class ZkConfig {
 	
 	/** zookeeper服务器地址 */
 	public static final String ZK_SERVER = "192.168.1.201:2181,"

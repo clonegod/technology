@@ -32,7 +32,7 @@ public class SetConfig {
 		};
 		
 		try {
-			zk = new ZooKeeper(Common.ZK_SERVER, 3000, watcher);
+			zk = new ZooKeeper(ZkConfig.ZK_SERVER, 3000, watcher);
 			while(zk.getState() != ZooKeeper.States.CONNECTED) {
 				Thread.sleep(3000);
 			}
@@ -50,15 +50,15 @@ public class SetConfig {
 	 * @return
 	 */
 	private void addAuth() {
-		zk.addAuthInfo(Common.AUTH_TYPE, Common.AUTH_PASSWORD.getBytes());
+		zk.addAuthInfo(ZkConfig.AUTH_TYPE, ZkConfig.AUTH_PASSWORD.getBytes());
 	}
 	
 	// 需要被保存到zookeeper作为共享配置的数据
 	private static Map<String,String> sysConfig = new HashMap<String,String>();
 	static {
-		sysConfig.put(Common.ZNODE_Url, "http://192.168.1.102:9000/api");
-		sysConfig.put(Common.ZNODE_Username, "scott");
-		sysConfig.put(Common.ZNODE_Password, "tiger");
+		sysConfig.put(ZkConfig.ZNODE_Url, "http://192.168.1.102:9000/api");
+		sysConfig.put(ZkConfig.ZNODE_Username, "scott");
+		sysConfig.put(ZkConfig.ZNODE_Password, "tiger");
 	}
 	
 	/**
@@ -68,23 +68,23 @@ public class SetConfig {
 	 */
 	public boolean save() {
 		try {
-			if(zk.exists(Common.ZNODE_ROOT, true) == null) {
-				zk.create(Common.ZNODE_ROOT, "root".getBytes(), 
+			if(zk.exists(ZkConfig.ZNODE_ROOT, true) == null) {
+				zk.create(ZkConfig.ZNODE_ROOT, "root".getBytes(), 
 						Ids.CREATOR_ALL_ACL, CreateMode.PERSISTENT);
 			}
 			
-			if(zk.exists(Common.ZNODE_Url, true) == null) {
-				zk.create(Common.ZNODE_Url, sysConfig.get(Common.ZNODE_Url).getBytes(), 
+			if(zk.exists(ZkConfig.ZNODE_Url, true) == null) {
+				zk.create(ZkConfig.ZNODE_Url, sysConfig.get(ZkConfig.ZNODE_Url).getBytes(), 
 						Ids.CREATOR_ALL_ACL, CreateMode.PERSISTENT);
 			}
 			
-			if(zk.exists(Common.ZNODE_Username, true) == null) {
-				zk.create(Common.ZNODE_Username, sysConfig.get(Common.ZNODE_Username).getBytes(), 
+			if(zk.exists(ZkConfig.ZNODE_Username, true) == null) {
+				zk.create(ZkConfig.ZNODE_Username, sysConfig.get(ZkConfig.ZNODE_Username).getBytes(), 
 						Ids.CREATOR_ALL_ACL, CreateMode.PERSISTENT);
 			}
 			
-			if(zk.exists(Common.ZNODE_Password, true) == null) {
-				zk.create(Common.ZNODE_Password, sysConfig.get(Common.ZNODE_Password).getBytes(), 
+			if(zk.exists(ZkConfig.ZNODE_Password, true) == null) {
+				zk.create(ZkConfig.ZNODE_Password, sysConfig.get(ZkConfig.ZNODE_Password).getBytes(), 
 						Ids.CREATOR_ALL_ACL, CreateMode.PERSISTENT);
 			}
 			
