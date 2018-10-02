@@ -19,7 +19,8 @@ public class Client {
 		
 		IntStream.range(1, 20).forEach(n ->  {
 			// 返回代理对象
-			UserService userService = clientProxy.create(UserService.class, "1.0");
+			UserService userService = clientProxy.create(UserService.class, null);
+//			UserService userService = clientProxy.create(UserService.class, "2.0");
 			// 代理对象的invoke方法，会从注册中心获取服务地址，透明地完成远程调用并返回结果
 			String response = userService.echo("rmi use socket to communicate between server and client!");
 			System.out.println(response);

@@ -37,7 +37,7 @@ public class ZkServiceDiscovery implements IServiceDiscovery {
 	
 	@Override
 	public String discovery(String serviceName) {
-		String path = ZkConfig.SERVICE_REGISTRY_PATH + "/" +serviceName;
+		String path = ZkConfig.SERVICE_REGISTRY_USERSERVICE + "/" +serviceName;
 		
 		// 获取服务地址列表
 		try {

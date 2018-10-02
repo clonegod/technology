@@ -30,7 +30,7 @@ public class RPCServer {
 
 
 	/**
-	 * 本地内存中保存服务名称和服务实例的映射关系
+	 * 本地内存中保存服务名称和服务实例的映射
 	 */
 	public void bind(Object ... services) {
 		for(Object service : services) {
@@ -46,7 +46,7 @@ public class RPCServer {
 	
 
 	/**
-	 * 发布服务
+	 * 注册服务到zookeeper
 	 */
 	public void publish() {
 		ServerSocket serverSocket = null;
@@ -55,7 +55,7 @@ public class RPCServer {
 			serverSocket = new ServerSocket(port);
 			
 			serviceMapping.forEach((serviceName, instance) -> {
-				System.out.println("开始注册服务："+serviceName+"---"+serviceAddress);
+				System.out.println("开始向zk注册服务："+serviceName+"---"+serviceAddress);
 				registryCenter.registry(serviceName, serviceAddress);
 			});
 			

@@ -2,7 +2,6 @@ package clonegod.rpc.server;
 
 import java.net.InetAddress;
 
-import clonegod.rpc.api.UserService;
 import clonegod.rpc.server.serviceregistry.IRegistryCenter;
 import clonegod.rpc.server.serviceregistry.ZKRegistryCenter;
 

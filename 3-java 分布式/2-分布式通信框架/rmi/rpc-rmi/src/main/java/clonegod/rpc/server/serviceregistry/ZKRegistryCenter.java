@@ -28,7 +28,7 @@ public class ZKRegistryCenter implements IRegistryCenter {
 			// /registrys/user-service/127.0.0.1:8001
 			// /registrys/user-service/127.0.0.1:8002
 			// /registrys/user-service/127.0.0.1:8003
-			String servicePath = ZkConfig.SERVICE_REGISTRY_PATH + "/" + serviceName;
+			String servicePath = ZkConfig.SERVICE_REGISTRY_USERSERVICE + "/" + serviceName;
 			
 			// 1、 创建/registrys/producet-service
 			if(curatorFramework.checkExists().forPath(servicePath) == null) {
