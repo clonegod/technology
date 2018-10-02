@@ -70,6 +70,7 @@
 			</plugin>
 			
 			<!-- 从本地schema生成POJO实体类 -->
+			<!-- JDK1.8 需要在jre/lib下添加属性文件jaxp.properties,内容：javax.xml.accessExternalSchema=all -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
