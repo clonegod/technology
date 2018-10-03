@@ -3,35 +3,49 @@ package clonegod.serialize01.jdk;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 
-public class SerializeUtil {
+import clonegod.serialize.ISerializer;
+
+public class JDKSerializer implements ISerializer {
 	
-	public static <T> void serialize(T obj, OutputStream out) {
+	@Override
+	public <T> byte[] serialize(T obj) {
+		ObjectOutputStream oos = null;
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream(out);
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(out);
 			oos.writeObject(obj);
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			return out.toByteArray();
+		} catch (Exception e) {
+			throw new RuntimeException("序列化失败", e);
+		} finally {
+			try {
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static <T> T deserialize(Class<T> cls, InputStream in) {
+	@Override
+	public <T> T deSerialize(byte[] data, Class<T> clazz) {
+		ObjectInputStream ois = null;
 		try {
-			ObjectInputStream ois = new ObjectInputStream(in);
-			Object obj = ois.readObject();
-			return (T)obj;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			ByteArrayInputStream in = new ByteArrayInputStream(data);
+			ois = new ObjectInputStream(in);
+			return (T) ois.readObject();
+		} catch (Exception e) {
+			throw new RuntimeException("反序列化失败", e);
+		} finally {
+			try {
+				ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -58,5 +72,5 @@ public class SerializeUtil {
 		
 		return null;
 	}
-	
+
 }

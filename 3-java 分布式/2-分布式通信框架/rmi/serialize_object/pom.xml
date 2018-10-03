@@ -16,6 +16,14 @@
   </properties>
 
   <dependencies>
+  
+  	<!-- xml -->
+    <dependency>
+    	<groupId>com.thoughtworks.xstream</groupId>
+    	<artifactId>xstream</artifactId>
+    	<version>1.4.10</version>
+    </dependency>
+  
     <!-- JSON -->
     <dependency>
 	    <groupId>com.google.code.gson</groupId>
@@ -81,7 +89,6 @@
 	    <artifactId>avro</artifactId>
 	    <version>1.8.2</version>
 	</dependency>
-	    
     
 	<dependency>
       <groupId>junit</groupId>

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import clonegod.serialize01.jdk.SerializeUtil;
+import clonegod.serialize01.jdk.JDKSerializer;
 
 public class Student implements Serializable, Cloneable {
 	
@@ -69,7 +69,7 @@ public class Student implements Serializable, Cloneable {
 	 * 深复制
 	 */
 	public Student deepClone() {
-		return SerializeUtil.deepClone(this);
+		return JDKSerializer.deepClone(this);
 	}
 	
 }

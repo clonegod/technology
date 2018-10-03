@@ -2,7 +2,6 @@ package clonegod.serialize01.jdk;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -11,42 +10,60 @@ import org.junit.Test;
 
 import clonegod.model.Person;
 import clonegod.model.User;
+import clonegod.serialize.ISerializer;
 
 public class TestJDKSerialize {
+	
+	ISerializer serializer = new JDKSerializer();
 	
 	/**
 	 * transient 修饰的字段，不会被序列化
 	 * static 静态变量，不会被序列化
 	 */
 	@Test
-	public void testSerialize() throws FileNotFoundException {
+	public void testSerialize() throws Exception {
 		Person person = new Person();
 		person.setName("mic");
 		person.setAge(18);
 		person.setPassword("mic18");
 		
-		SerializeUtil.serialize(person, new FileOutputStream("target/person.dat"));
+		byte[] data = serializer.serialize(person);
+		
+		File file = new File("target/person.dat");
+		
+		FileOutputStream fos = new FileOutputStream(file);
+		fos.write(data);
+		fos.flush();
+		fos.close();
+		
 		
 		Person.USER_TYPE = "GUEST"; // 静态变量不会被序列化，所以反序化得到的对象将引用静态变量最新的值
+		FileInputStream fis = new FileInputStream(file);
+		byte[] bytes = new byte[fis.available()];
+		fis.read(bytes);
+		fis.close();
 		
-		Person mic18 = SerializeUtil.deserialize(Person.class, new FileInputStream("target/person.dat"));
+		Person mic18 = serializer.deSerialize(bytes, Person.class);
 		System.out.println(mic18);
 		System.out.println(mic18.USER_TYPE);
 	}
 	
 	/**
-	 * 序列化子类对象时，如果父类没有实现 Serializable接口，则父类的字段都不会被序列化。
+	 * Serializable 不可继承性！
 	 * 
+	 * 序列化子类对象时，如果父类没有实现 Serializable接口，则父类的字段都不会被序列化。
 	 * 因此，如果序列化时需要将父类中的字段一起序列化，那么父类也必须实现Serializable接口！
 	 */
 	@Test
-	public  void testSerializeSuperFileds() throws FileNotFoundException {
+	public  void testSerializeSuperFileds() throws Exception {
 		User user = new User();
 		user.setAge(10);
+		user.setName("alice");
 		
-		SerializeUtil.serialize(user, new FileOutputStream("target/user.dat"));
+		// 序列化
+		byte[] bytes = serializer.serialize(user);
 		
-		User user2 = SerializeUtil.deserialize(User.class, new FileInputStream("target/user.dat"));
+		User user2 = serializer.deSerialize(bytes, User.class);
 		System.out.println(user2);
 		
 	}
@@ -74,7 +91,9 @@ public class TestJDKSerialize {
 		System.out.println("第1次序列化之后，文件大小：" + new File("target/person.dat").length());
 		
 		// 第2次写入
-		person.setAge(32); // 修改后的属性值，在反序列化之后是无法获取到的。为什么呢？
+		// 第一次写入后，再修改属性值，在反序列化之后是无法获取到的。为什么呢？
+		// 因为同一个对象多次写入，从第二次写入开始，将只通过指针引用第一个对象（占5个字节的大小）--- 提升效率考虑。
+		person.setAge(32); 
 		oos.writeObject(person);
 		oos.flush();
 		System.out.println("第2次序列化之后，文件大小：" + new File("target/person.dat").length());
