@@ -5,8 +5,9 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
-import clonegod.kafka.client.KafkaProperties;
+import clonegod.kafka.client.conf.KafkaProperties;
 
 public class Producer extends Thread {
     private final KafkaProducer<Integer, String> producer;
@@ -35,10 +36,12 @@ public class Producer extends Thread {
                     messageStr), new SendMsgCallBack(startTime, messageNo, messageStr));
             } else { // Send synchronously
                 try {
+                	RecordMetadata recordMetadata = 
                     producer.send(new ProducerRecord<>(topic,
                         messageNo,
                         messageStr)).get();
-                    System.out.println("Sent message: (" + messageNo + ", " + messageStr + ")");
+                	System.out.println(String.format("Send message:(%s, %s), topic=%s, partition=%s, offset=%s", 
+                			messageNo, messageStr, recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset()));
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }

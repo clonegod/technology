@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import clonegod.kafka.client.KafkaProperties;
+import clonegod.kafka.client.conf.KafkaProperties;
 
 /**
  * 生产者异步发送消息

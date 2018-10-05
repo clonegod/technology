@@ -6,7 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-import clonegod.kafka.client.KafkaProperties;
+import clonegod.kafka.client.conf.KafkaProperties;
 
 import java.util.Collections;
 import java.util.Properties;

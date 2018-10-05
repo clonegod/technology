@@ -7,7 +7,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
-import clonegod.kafka.client.KafkaProperties;
+import clonegod.kafka.client.conf.KafkaProperties;
 
 /**
  * 生产者同步发送消息
