@@ -1,15 +1,15 @@
 package clonegod.kafka.client.consumer;
 
-import kafka.utils.ShutdownableThread;
+import java.util.Collections;
+import java.util.Properties;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import clonegod.kafka.client.conf.KafkaProperties;
-
-import java.util.Collections;
-import java.util.Properties;
+import kafka.utils.ShutdownableThread;
 
 public class Consumer extends ShutdownableThread {
     private final KafkaConsumer<Integer, String> consumer;
@@ -20,7 +20,7 @@ public class Consumer extends ShutdownableThread {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaProperties.KAFKA_SERVER_URL_LIST);
         // 消费端所属的组
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "DemoConsumer1");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "DemoConsumer");
         // 自动确认模式，后台每隔一段时间向broker汇报该consumer的offset
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         // 设置自动确认模式的时间间隔（kafka自动提交采用的是批量确认方式）
@@ -70,6 +70,9 @@ public class Consumer extends ShutdownableThread {
 	public static void main(String[] args) {
 		Consumer consumerThread = new Consumer(KafkaProperties.TOPIC);
 		consumerThread.start();
-
+		
+		System.out.println(Math.abs("DemoConsumer".hashCode()) % 50);
+		
+		
 	}
 }
