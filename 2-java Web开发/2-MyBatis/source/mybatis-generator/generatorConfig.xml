@@ -43,7 +43,9 @@
     <!--
     <table tableName="pay" domainObjectName="Pay" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" />
     -->
-    <table tableName="balance" domainObjectName="Balance" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" />
+    <table tableName="balance" domainObjectName="Balance" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" >
+        <property name="useActualColumnNames" value="false"/> <!-- 是否将数据库字段的名称作为属性名。当数据库表的字段采用的是驼峰命名时，可将此属性设置为false -->
+    </table>
     <!-- more table ... -->
 
   </context>

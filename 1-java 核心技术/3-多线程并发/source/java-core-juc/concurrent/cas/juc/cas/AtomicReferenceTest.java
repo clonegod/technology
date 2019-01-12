@@ -13,7 +13,9 @@ import bean.UserAccount;
 import conc.util.CommonUtil;
 
 /**
- * 原子更新基本类型的AtomicInteger，只能更新一个变量，如果要原子的更新多个变量，就需要使用这个原子更新引用类型提供的类。
+ * 原子更新基本类型的AtomicInteger，只能更新一个变量
+ * 
+ * 如果要原子的更新多个变量，就需要使用这个原子更新引用类型提供的类。
  *
  */
 public class AtomicReferenceTest {

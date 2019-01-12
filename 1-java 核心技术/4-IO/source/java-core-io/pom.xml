@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 		  <groupId>clonegod</groupId>
-		  <artifactId>clonegod-utils</artifactId>
+		  <artifactId>common-utils</artifactId>
 		  <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
