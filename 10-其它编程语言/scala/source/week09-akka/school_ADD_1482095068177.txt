@@ -1,1 +1,0 @@
-S -> List(xiaoming)

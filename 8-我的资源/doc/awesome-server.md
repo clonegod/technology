@@ -1,7 +1,0 @@
-【nginx】
-
-
-【tomcat】
-
-
-【linux】

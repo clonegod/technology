@@ -1,1 +1,0 @@
-## [MYSQL 5.7](https://dev.mysql.com/doc/refman/5.7/en/select.html)

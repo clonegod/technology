@@ -1,9 +1,0 @@
-课程源码：
-1. 编程式项目 http://git.gupaoedu.com/vip/gupaoedu-mybatis
-
-2. 集成spring
-http://git.gupaoedu.com/vip/gupao-springmvc
-
-注意查看项目下的分支，上课用的是vip分支
-
-git、maven、idea学习教程 http://bbs.gupaoedu.com/forum.php?mod=viewthread&tid=380&extra=page%3D1&_dsign=4b78d4bb

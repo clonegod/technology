@@ -29,6 +29,8 @@ MapperProxy
 SqlSession
 SimpleExecutor
 CachingExecutor
+Plugin
+ParameterHandler
 StatementHandler
 ResultSetHandler
 ``

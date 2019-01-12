@@ -35,7 +35,7 @@ public class PrintSQLChinesePlugin implements Interceptor {
     }
 
 	/**
-	 * target: Executor or ParameterHandler or ResultSetHandler or StatementHandler 
+	 * target: Executor or ParameterHandler  or StatementHandler or ResultSetHandler
 	 */
 	@Override
     public Object plugin(Object target) {

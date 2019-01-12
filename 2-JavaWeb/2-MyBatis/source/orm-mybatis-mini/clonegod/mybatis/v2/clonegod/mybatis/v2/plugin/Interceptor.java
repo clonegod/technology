@@ -3,9 +3,9 @@ package clonegod.mybatis.v2.plugin;
 import clonegod.mybatis.v2.plugin.proxy.Invocation;
 
 /**
- * plugin是基于拦截器做的，因此先声明一个接口作为Intercepter
+ * plugin是基于拦截器做的，因此先声明一个接口作为Interceptor
  * 什么是拦截器呢？
- * 	拦截器就是在某个类的某个方法被执行的时候，半路杀出个程咬静，然后做点邪恶的事。。。
+ * 	拦截器就是在某个类的某个方法被执行的时候，在执行之前，或者之后进行某种操作
  * 
  * 
  * 怎样实现这个功能：凡是实现了Intercepter的类(插件)都被执行到，在流程的哪个地方被执行？
@@ -18,8 +18,18 @@ import clonegod.mybatis.v2.plugin.proxy.Invocation;
  */
 public interface Interceptor {
 	  
+	/**
+	 * 
+	 * @param invocation 封装了：目标对象，方法，参数
+	 * @return	方法执行的结果
+	 */
 	  Object intercept(Invocation invocation) throws Throwable;
 
+	  /**
+	   * 
+	   * @param target	需要被代理的对象
+	   * @return	生成的代理对象
+	   */
 	  Object plugin(Object target);
 
 //	  void setProperties(Properties properties);

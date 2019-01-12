@@ -1,2 +1,0 @@
-S -> List(xiaohong, xiaoming)
-T -> List(mike)

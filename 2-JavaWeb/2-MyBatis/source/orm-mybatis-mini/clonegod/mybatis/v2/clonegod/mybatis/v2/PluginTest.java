@@ -16,6 +16,7 @@ public class PluginTest {
 
 		CGSqlSession sqlSession = new CGSqlSession(cfg, ExecutorFactory.get(ExecutorType.SIMPLE, cfg));
 
+		// sql 执行过程中会被自定义插件拦截
 		AuthorMapper authorMapper = sqlSession.getMapper(AuthorMapper.class);
 
 		Author author = authorMapper.selectByPrimaryKey(1);

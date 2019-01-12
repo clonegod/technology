@@ -6,7 +6,7 @@
 <configuration>
 	
 	<!-- 加载外部文件中的属性-->
-	<properties resource="database.properties"/>
+	<properties resource="db.properties"/>
 	
 	<!-- MyBatis运行时全局参数配置 -->
 	<settings>  
