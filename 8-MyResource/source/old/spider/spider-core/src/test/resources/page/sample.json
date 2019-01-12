@@ -1,0 +1,45 @@
+{
+    pages: [
+        {
+            name: index,
+            order: 1,
+            url: xxx
+        },
+        {
+            name: login,
+            order: 2,
+            url: xxx
+        },
+        {
+            name: pre-main,
+            order: -1,
+            url: xxx
+        },
+        {
+            name: main,
+            order: 3
+            url: xxx
+        },
+        {
+            name: detail-get,
+            order: 4
+            url: xxx,
+            loopItem: {
+                loopCount: 2
+            }
+        },
+        {
+            name: detail-post,
+            order: 5
+            url: xxx,
+            loopItem: {
+                loopCount: 3
+            }
+        },
+        {
+            name: logout,
+            order: 6
+            url: xxx
+        }
+    ]
+}

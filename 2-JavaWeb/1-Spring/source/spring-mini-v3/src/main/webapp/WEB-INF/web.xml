@@ -1,0 +1,34 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <!-- 通过ContextLoaderListener，监听Servlet容器启动事件，初始化spring ioc容器 -->
+  	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:application.properties</param-value>
+    </context-param>
+  
+  <listener>
+  	<listener-class>clonegod.spring.framework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!-- 模拟spring的DispatchServlet，初始化springMVC相关的组件 -->
+  <servlet>
+  	<servlet-name>ClonegodMiniSpringMvc</servlet-name>
+  	<servlet-class>clonegod.spring.framework.web.servlet.MyDispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>application-servlet.properties</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ClonegodMiniSpringMvc</servlet-name>
+  	<url-pattern>/*</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

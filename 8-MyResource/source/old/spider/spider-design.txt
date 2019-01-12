@@ -1,0 +1,39 @@
+spider-parent
+	spider-core			# htmlunit
+	spider-common		# utilities
+	spider-dao			# mybatis->mysql / hbase / mongodb
+	sprider-web 		# springMVC / playframework
+	spider-ext-driver	# winio -> activeX
+	spider-ext-ocr		# c# -> OneNote
+	
+=========================================================
+爬虫框架设计要点：
+1、请求封装
+	请求参数的封装（配置化）：url, get/post, charset, header, param
+	webclient定制化（配置化）：每个页面可对webclient进行某些属性的个性化设置（启用js，允许重定向，下载图片，连接超时时间）
+	动态参数替换：使用springEL表达式进行变量替换
+	请求拦截：urlFilter 基于包含关系或者模式匹配-按资源类型进行拦截(.do, .jsp, /static/xxx)、按url进行拦截(http://x.y.z.jsp)
+	请求重试：遇到IO错误时可多重试几次
+	
+2、响应内容解析、存储
+	成功标记（配置化）：请求成功时的页面特征（响应页面内容与预期一致）
+	错误标记（配置化）：请求失败时的页面特征（常用于提取登陆失败后的错误提示）
+	请求参数的提取（配置化）：从当前页面提取参数，用于之后的请求使用，放到一个页面共享的缓存中（同一sessionId的请求共享一个缓存map）
+	响应页面的保存：本地文件，数据库（提交到线程池中执行）
+	响应页面中业务数据的提取（a。本地服务器解析，提交到线程池；b。通过消息队列发送到另外的服务器进行解析）
+	
+3、 api
+	接口：对外发布api接口
+	参数校验、响应结果封装（json）
+
+4、 extension
+	代理接口；提供代理ip(socket代理-拨号连接，http代理-代理ip服务商)
+	验证码打码：第三方在线打码平台
+	ie控件：解决网站登录时遇到ActiveX的问题(winio)
+	图片ocr：解决网站数据以图片形式提供的问题，通过ocr图像识别技术(onenote)提取出图片中的内容
+
+5、 后台管理、监控
+	目标网站配置：配置不同网站的登录参数（地区id，登录页面url，登录参数）
+	抓取页面配置：页面请求与解析配置通过在线编辑方式完成，需实时刷新到抓取系统中
+	状态跟踪：查询某个任务当前的状态（登陆10、抓取20、解析30、成功00、失败99）
+	数据查询：按地区，客户id，任务id查询历史数据

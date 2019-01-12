@@ -1,0 +1,41 @@
+<included>
+  
+  	<!-- 控制台日志 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- %line 生成行号对性能有影响，不建议开启 -->
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 按天滚动的文件日志 -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/spider.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/spider.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- name:用来指定受此loger约束的某一个包或者具体的某一个类。 -->
+	<!-- addtivity:是否向上级loger传递打印信息。默认是true。 -->
+	<logger name="clonegod.spider" level="info" addtivity="true" />
+	
+	<logger name="com.gargoylesoftware.htmlunit.DefaultCssErrorHandler" level="off" addtivity="true" />
+	
+	<logger name="org.thymeleaf.*" level="debug" addtivity="true" />
+
+	<!-- logback维护的一个默认根logger，是所有logger的祖先 -->
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+	
+</included>

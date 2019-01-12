@@ -1,0 +1,10 @@
+http://www.cnblogs.com/huangfox/p/3328800.html
+
+https://blog.csdn.net/u013967175/article/category/7296876
+
+IdleStateHandler
+	https://stackoverflow.com/questions/15681456/managing-servers-http-keep-alive-timeout-with-netty
+	
+https://metabroadcast.com/blog/java-socket-programming-with-netty
+
+	

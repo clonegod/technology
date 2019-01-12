@@ -1,0 +1,166 @@
+~~~~~~~~~~~成为一名JVM多语言程序员。
+
+【groovy产生的背景】
+为已经非常成熟的java平台提供动态语言的特性，比如python。
+
+【groovy是什么】
+1、动态性：groovy是java平台上的一门动态语言，提供了类似Python，Ruby等具有的特性。
+2、友好性：与java运行时环境无缝集成、与java相似的语法。
+3、脚本语言：Groovy可以作为脚本语言使用，可提供类似shell脚本的功能。
+
+【为什么要使用groovy ----- 编写代码的可表达性比java强】
+1、为java语言提供辅助动态语言特性的扩展；
+2、提供像脚本一样简洁的Groovy语法，避免结构沉重的Java。
+3、groovy设计目的是：将更多的工作留给计算机，让程序员的工作更少。groovy能用较少的代码做较多的工作。
+
+【静态类型与动态类型的比较】
+1、静态类型为性能优化、编译时安全检查和IDE支持提供更多有用的帮助，也显示变量或者方法参数相关的附加信息及方法重载，静态类型也是从反射获取有用信息的前提。
+2、动态类型，执行代码的动态化，被执行的代码可以动态修改实时生效。方法参数动态化，在一个对象上进行没有固定类型的方法调用，比如实现一个高度重用的函数。
+
+【groovy的适用场景】
+Groovy语言不适合对性能要求高的场景，groovy侧重于提供动态的编程能力。
+	方法调用都是通过invokeMethod、invokeDynamic来实现的，内部会使用到反射，因此速度较慢。--- AOP设计思路
+	
+Groovy一般用来辅助java语言完成应用系统中的某一部分工作，为系统某部分增加适当的灵活性。
+
+【groovy的生命周期】
+第一种情况，直接运行groovy源码：
+通过命令groovy MyScript.groovy 来运行这个脚本，下面是这个类产生的步骤：
+1、MyScript.groovy被传递给groovy的转换器；
+2、Groovy转换器产生一个抽象语法树（AST）来表示在MyScript.groovy中的所有代码；
+3、Groovy类生成器根据AST产生java字节码，根据脚本的内容，结果可能是多个类，现在类通过groovy类加载器是可以使用的了；
+4、Java运行时像调用一个java类MyScript一样来调用第三部产生的类；
+
+第二种情况，先编译groovy源码：
+	当用groovyc代替groovy时，产生的类被写到*.class文件中，放入classpath路径就可以被JVM加载使用了。
+
+【groovy的动态性是怎么实现的】
+1、Groovy不是解释型语言，也不是真正意义上的脚本语言，而是编译型语言（groovy源码会经过groovy编译器编译为class字节码文件）。
+2、groovy类一次性产生并且在加载之后不能改变字节码，类不能改变，那么又怎么能增加方法呢？
+	动态性底层实现机制一：
+		Groovy通过一个名叫MetaClass的装备来技巧性的过滤对对象所有方法的调用，这样允许动态分配方法，包括解决附加方法到存在的类
+		方法的调用被重定向为通过对象的MetaClass进行处理，这个MetaClass现在能在运行时处理如拦截、重定向、增加/删除方法等等之类的方法调用。
+		这个原则运用到所有通过groovy代码的处理，不管方法是否在groovy对象中或者在java对象中，记住，这没有区别。
+	动态性底层机制二：
+		把代码放在一个字符串中并且通过groovy来运行它。
+		根据代码的任意字符串来运行的能力是脚本语言的显著特征，这意味着groovy能像脚如果满意该文档本语言一样使用，虽然groovy本身是一个一般的编程语言。
+		比如，evaluate("def x=1; println x+100")
+		一行代码列出文件: groovy -e "new File('.').eachFileRecurse { println it }"
+
+【groovy特性汇总】
+Language 语言层面
+	literals
+		Strings/RegEx
+		Lists/Maps/Ranges
+		Closures
+	Everything is object
+		Object operators
+		Multimethods
+		GroovyBeans
+	Meta Object Protocal
+		Method interception
+		Category use(mixin)
+		Dynamic methods and properties
+	control flow
+		Groovy Truth
+		Switch
+		Advanced operators
+		GPath
+		Iterations
+	Execution
+		Scriptability
+		Hot class reloading
+GDK 类库
+	Files and I/O
+	Threads and Proesses
+	Object Inspection
+	Groovy aware methods : String / lists/ maps
+	
+Library 其它工具库
+	XML
+	Templates
+	Swing
+	Ant
+	SQL
+	...
+
+		
+================================================================================================================================================		
+
+【groovy的特性】
+可选的类型声明
+可选的语句结束符（在java中为分号）	
+简化了的for循环处理
+GString对String进行功能增强
+函数字面值/闭包/函数式
+集合的一等支持
+正则表达式的一等支持
+XML处理的一等支持
+......
+
+
+【GDK:groovy 类库，是JDK类库的扩展】
+Groovy的类库是JDK类库的扩展，groovy类库提供了一些新的类（例如，简化数据库访问和XML处理的类），也为已经存在的java类增加了功能，
+这些附加的功能就是GDK，为java类在兼容性、功能性和可表达性方面提供了重要的优势。
+
+【groovy 与 Java 互操作】
+java调用Groovy：
+	Groovy和java一起使用它的动态类型和新语言特性，在一些需要动态特性的地方为java提供支持。
+Groovy调用java：
+	Groovy在实现重活时仍然需要java来支持，并且它调用java的类库非常方便，可互操作。
+
+【groovy的用户群】
+1、java专业人士
+	
+2、脚本编写人员
+	
+3、敏捷开发人员
+
+【运行groovy】
+groovysh	交互式命令行
+groovyConsole 控制台IDE
+groovy 直接运行groovy源码
+
+中文乱码问题：
+	设置启动参数 -Dencoding=UTF-8
+
+==================================================================
+def writer = new StringWriter()
+def xml = new groovy.xml.MarkupBuilder(writer)
+xml.person(id:1, seq:2) {
+    name 'Alice'
+    age 20
+    extra {
+        adress 'beijing'
+    }
+}
+
+println writer.toString()
+
+output:
+<person id='1' seq='2'>
+  <name>Alice</name>
+  <age>20</age>
+  <extra>
+    <adress>beijing</adress>
+  </extra>
+</person>
+
+==================================================================
+使用Groovy
+1、You can test this by typing the following in a command shell:
+groovysh
+
+2、Which should create an interactive groovy shell where you can type Groovy statements. 
+groovyConsole
+
+3、To run a specific Groovy script type:
+groovy SomeScript
+
+
+Eclipse Groovy插件安装
+https://github.com/groovy/groovy-eclipse/wiki
+
+
+Groovy/Grails Tool Suite™
+https://spring.io/tools/ggts

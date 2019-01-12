@@ -1,0 +1,55 @@
+package clonegod.spider.common.util;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Base64;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+
+public class SwingDialogUI {
+	
+	public static String display(BufferedImage bufferedImage) {
+		JFrame jframe = new JFrame();
+		jframe.add(new ImagePanel(bufferedImage));
+		jframe.setVisible(true);
+		jframe.setSize(400, 300);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		String imageCode = JOptionPane.showInputDialog("请输入验证码：");
+		jframe.dispose();
+		System.out.println("input imageCode=" + imageCode);
+		return imageCode;
+	}
+
+	private static class ImagePanel extends JPanel {
+
+		private static final long serialVersionUID = -2385722543715276915L;
+
+		private BufferedImage image;
+
+		public ImagePanel(BufferedImage image) {
+			this.image = image;
+		}
+
+		@Override
+		public void paintComponent(Graphics g) {
+			g.drawImage(image, 0, 0, null);
+		}
+
+	}
+
+	public static void main(String[] args) throws IOException {
+		String base64Str = "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";
+
+		BufferedImage bi = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(base64Str)));
+
+		display(bi);
+
+	}
+}

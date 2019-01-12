@@ -1,0 +1,15 @@
+DROP TABLE PARTNER IF EXISTS
+DROP TABLE Account IF EXISTS
+
+CREATE TABLE PARTNER  (
+	NAME VARCHAR(100),  
+	EMAIL VARCHAR(100) 
+) ;
+
+CREATE TABLE Account  (
+	elecAccountNo VARCHAR(100),  
+	name VARCHAR(100), 
+	age int, 
+	certNo VARCHAR(100), 
+	balance VARCHAR(100)
+) ;
